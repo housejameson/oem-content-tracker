@@ -1,0 +1,628 @@
+/* --- 1. CSS Variables & Global Reset --- */
+:root {
+    --primary-color: #2563eb; /* A nice modern blue */
+    --primary-hover: #1d4ed8;
+    --bg-color: #f3f4f6;
+    --card-bg: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    
+    /* Heatmap Colors */
+    --status-red: #ef4444;
+    --status-yellow: #f59e0b;
+    --status-green: #10b981;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+/* --- 2. Header & Navigation --- */
+header {
+    background-color: var(--card-bg);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+header h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+#login-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+#login-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* --- 3. Main Layout Containers --- */
+main {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Hide elements easily via JavaScript */
+.hidden {
+    display: none !important;
+}
+
+/* --- 4. Dashboard View --- */
+#dashboard-view {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.alert-box {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: var(--card-bg);
+    position: relative;
+}
+
+/* Locks the main title at the top of the box while scrolling */
+.alert-box h3 {
+    position: sticky;
+    top: -1.5rem; /* Pulls the sticky point up through the padding */
+    background-color: var(--card-bg);
+    z-index: 5; 
+    
+    /* Expands the background color to fill the gaps */
+    margin-top: -1.5rem; 
+    padding-top: 1.5rem; 
+    
+    /* (Optional) If you have gaps on the left/right edges, uncomment these: */
+    /* margin-left: -1.5rem; */
+    /* margin-right: -1.5rem; */
+    /* padding-left: 1.5rem; */
+    /* padding-right: 1.5rem; */
+    
+    padding-bottom: 0.5rem; 
+    border-bottom: 1px solid var(--border-color); 
+    margin-bottom: 1rem;
+}
+
+#workspace-view {
+    max-width: 100%;
+    overflow: hidden; 
+}
+
+/* --- 5. Workspace / Tabs --- */
+.oem-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    overflow-x: auto; /* Adds scrolling to tabs if you have a ton of OEMs */
+    white-space: nowrap; /* Prevents tabs from stacking on top of each other */
+    padding-bottom: 4px; /* Room for the scrollbar */
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px; /* Pull it down to overlap the container border */
+}
+
+.tab-btn:hover {
+    color: var(--primary-color);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.filters {
+    margin-bottom: 1rem;
+}
+
+.filters select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+/* --- 6. The Matrix Table --- */
+.table-container {
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow-x: auto; /* This enables the horizontal scroll for the table */
+    max-width: 100%; /* Forces it to respect the screen size */
+    max-height: 600px;
+    overflow-y: auto;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    min-width: 140px;
+    word-wrap: break-word;
+    white-space: normal;
+    vertical-align: middle;
+}
+
+th:first-child, td:first-child {
+    min-width: 160px;
+    text-align: left;
+}
+
+th:last-child, td:last-child {
+    border-right: none;
+}
+
+/* Sticky headers for rows and columns */
+thead th {
+    background-color: var(--card-bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    line-height: 1.3;
+    vertical-align: bottom;
+    box-shadow: 0 2px 4px -2px rgba(0,0,0,0.2);
+}
+
+tbody th {
+    background-color: var(--card-bg);
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+/* --- 7. Status Indicators (The Heatmap Matrix) --- */
+.status-indicator {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px; /* Creates the square look with slightly rounded corners */
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.status-indicator:hover {
+    transform: scale(1.1); /* Slight pop effect on hover */
+    opacity: 0.9;
+}
+
+/* Colors and text colors for the symbols */
+.indicator-green { background-color: var(--status-green); color: white; }
+.indicator-red { background-color: var(--status-red); color: white; }
+.indicator-yellow { background-color: var(--status-yellow); color: white; }
+.indicator-gray { background-color: #6b7280; color: white; font-weight: bold; }
+.indicator-empty { background-color: var(--bg-color); color: var(--text-muted); border: 1px dashed var(--border-color); }
+
+/* Center the content in the table cells so the squares line up nicely */
+table th, table td {
+    text-align: center;
+}
+table th:first-child, table td:first-child {
+    text-align: left; /* Keep the Model names aligned to the left */
+}
+
+/* --- 8. The Pop-Up Modal --- */
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.close-btn:hover { color: var(--text-main); }
+
+.modal h2 { margin-bottom: 0.25rem; }
+.modal #modal-subtitle { color: var(--text-muted); margin-bottom: 1.5rem; }
+
+.edit-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.edit-section h3 { margin-bottom: 0.75rem; }
+
+.edit-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.edit-section input[type="url"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+#save-btn {
+    width: 100%;
+    background-color: var(--status-green);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#save-btn:hover {
+    background-color: #059669; /* Darker green */
+}
+
+/* --- 9. Dashboard Dropdowns (Accordions) --- */
+.client-dropdown {
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: #f9fafb;
+    overflow: hidden;
+}
+
+.client-dropdown summary {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.client-dropdown summary:hover {
+    background-color: #f3f4f6;
+}
+
+.client-dropdown ul {
+    padding: 0.5rem 1rem 1rem 2.5rem;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.client-dropdown ul li {
+    margin-bottom: 0.25rem;
+}
+
+/* The little number badge next to the client name */
+.alert-badge {
+    background-color: var(--status-red);
+    color: white;
+    padding: 0.1rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.alert-badge.warning {
+    background-color: var(--status-yellow);
+}
+
+/* --- Dashboard Clickable Items --- */
+.dashboard-item {
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    margin-left: -0.5rem; /* Offsets the padding to keep text aligned */
+}
+
+.dashboard-item:hover {
+    background-color: #e5e7eb;
+}
+
+/* --- 10. Table Cell Links --- */
+.cell-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between the square and the links */
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.external-link {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: #e5e7eb;
+    text-decoration: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+    line-height: 1.2;
+}
+
+.external-link:hover {
+    background-color: var(--primary-hover);
+    color: white;
+}
+
+/* --- 12. Toggle Switch UI --- */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--border-color);
+    transition: 0.3s;
+    border-radius: 22px;
+}
+
+.theme-switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.theme-switch input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+.theme-switch input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+/* --- 11. Dark Mode --- */
+[data-theme="dark"] {
+    --primary-color: #3b82f6;
+    --primary-hover: #60a5fa;
+    --bg-color: #111827; /* Very dark gray */
+    --card-bg: #1f2937;  /* Slightly lighter dark gray */
+    --text-main: #f9fafb; /* Off-white text */
+    --text-muted: #9ca3af;
+    --border-color: #374151;
+}
+
+/* Overrides for items that originally had hardcoded light colors */
+[data-theme="dark"] thead th,
+[data-theme="dark"] .client-dropdown {
+    background-color: #111827;
+}
+
+[data-theme="dark"] .client-dropdown summary:hover,
+[data-theme="dark"] .dashboard-item:hover {
+    background-color: #374151;
+}
+
+[data-theme="dark"] .external-link {
+    background-color: #374151;
+    color: #60a5fa;
+}
+
+[data-theme="dark"] .external-link:hover {
+    background-color: #4b5563;
+    color: white;
+}
+
+/* Optional: Make the modal background slightly darker for contrast */
+[data-theme="dark"] .modal {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* --- 13. Icon Buttons --- */
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Makes the hover background a perfect circle */
+    transition: background-color 0.2s, transform 0.3s ease;
+}
+
+.icon-btn:hover {
+    background-color: var(--border-color);
+    transform: rotate(45deg); /* Adds a subtle gear-turning effect */
+}
+
+/* --- 14. Modern Buttons --- */
+.btn-modern {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px; /* Smooth rounded corners */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+}
+
+/* Primary "Save" Button */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px); /* Slight lift effect on hover */
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:active {
+    transform: translateY(0); /* Pushes down when clicked */
+}
+
+/* Secondary "Clear" Button */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+    color: var(--text-main);
+}
+
+/* --- 15. Signed Out States --- */
+
+/* 1. Hide the inside of the sections when logged out */
+body.logged-out #workspace-view > *,
+body.logged-out #dashboard-view > * {
+    display: none !important;
+}
+
+/* 2. Inject the placeholder text cleanly into the empty space */
+body.logged-out #workspace-view::after,
+body.logged-out #dashboard-view::after {
+    content: "Sign-In To Get Started";
+    display: block;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+    background: var(--card-bg);
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+/* --- 16. Loading Overlay --- */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color); /* Matches your dark/light mode */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Higher than modals */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#loading-overlay.fade-out {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.loader-content {
+    text-align: center;
+    color: var(--text-main);
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--border-color);
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
