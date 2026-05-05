@@ -777,7 +777,7 @@ const renderDashboard = () => {
             const oem = appData.oems[oemId];
             if (!oem) return;
 
-            oem.models.forEach(model => {
+            [...oem.models].sort((a, b) => a.localeCompare(b)).forEach(model => {
                 const docId = `${clientId}_${oemId}_${model.replace(/\s+/g, '-').toLowerCase()}`;
                 const data = appData.tracking[docId];
 
@@ -906,7 +906,7 @@ const renderTable = () => {
     let bodyHtml = '';
 
     if (activeOem && activeOem.models) {
-        activeOem.models.forEach(model => {
+        [...activeOem.models].sort((a, b) => a.localeCompare(b)).forEach(model => {
             bodyHtml += `<tr><th>${model}</th>`;
             activeClients.forEach(([clientId, client]) => {
                 const docId = `${clientId}_${appData.activeOemId}_${model.replace(/\s+/g, '-').toLowerCase()}`;
