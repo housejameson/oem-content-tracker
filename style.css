@@ -1,6 +1,6 @@
 /* --- 1. CSS Variables & Global Reset --- */
 :root {
-    --primary-color: #2563eb; /* A nice modern blue */
+    --primary-color: #2563eb;
     --primary-hover: #1d4ed8;
     --bg-color: #f3f4f6;
     --card-bg: #ffffff;
@@ -75,7 +75,8 @@ main {
 }
 
 /* --- 4. Dashboard View --- */
-#dashboard-view {
+#dashboard-view,
+#location-dashboard-view {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
@@ -94,29 +95,20 @@ main {
     position: relative;
 }
 
-/* Locks the main title at the top of the box while scrolling */
 .alert-box h3 {
     position: sticky;
-    top: -1.5rem; /* Pulls the sticky point up through the padding */
+    top: -1.5rem;
     background-color: var(--card-bg);
     z-index: 5; 
-    
-    /* Expands the background color to fill the gaps */
     margin-top: -1.5rem; 
     padding-top: 1.5rem; 
-    
-    /* (Optional) If you have gaps on the left/right edges, uncomment these: */
-    /* margin-left: -1.5rem; */
-    /* margin-right: -1.5rem; */
-    /* padding-left: 1.5rem; */
-    /* padding-right: 1.5rem; */
-    
     padding-bottom: 0.5rem; 
     border-bottom: 1px solid var(--border-color); 
     margin-bottom: 1rem;
 }
 
-#workspace-view {
+#workspace-view,
+#location-workspace-view {
     max-width: 100%;
     overflow: hidden; 
 }
@@ -127,9 +119,9 @@ main {
     gap: 0.5rem;
     margin-bottom: 1.5rem;
     border-bottom: 2px solid var(--border-color);
-    overflow-x: auto; /* Adds scrolling to tabs if you have a ton of OEMs */
-    white-space: nowrap; /* Prevents tabs from stacking on top of each other */
-    padding-bottom: 4px; /* Room for the scrollbar */
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 4px;
 }
 
 .tab-btn {
@@ -140,7 +132,7 @@ main {
     font-weight: 600;
     color: var(--text-muted);
     border-bottom: 2px solid transparent;
-    margin-bottom: -2px; /* Pull it down to overlap the container border */
+    margin-bottom: -2px;
 }
 
 .tab-btn:hover {
@@ -167,8 +159,8 @@ main {
     background: var(--card-bg);
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    overflow-x: auto; /* This enables the horizontal scroll for the table */
-    max-width: 100%; /* Forces it to respect the screen size */
+    overflow-x: auto;
+    max-width: 100%;
     max-height: 600px;
     overflow-y: auto;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -200,7 +192,6 @@ th:last-child, td:last-child {
     border-right: none;
 }
 
-/* Sticky headers for rows and columns */
 thead th {
     background-color: var(--card-bg);
     position: sticky;
@@ -226,7 +217,7 @@ tbody th {
     align-items: center;
     width: 36px;
     height: 36px;
-    border-radius: 6px; /* Creates the square look with slightly rounded corners */
+    border-radius: 6px;
     font-size: 1.25rem;
     font-weight: bold;
     cursor: pointer;
@@ -235,30 +226,28 @@ tbody th {
 }
 
 .status-indicator:hover {
-    transform: scale(1.1); /* Slight pop effect on hover */
+    transform: scale(1.1);
     opacity: 0.9;
 }
 
-/* Colors and text colors for the symbols */
 .indicator-green { background-color: var(--status-green); color: white; }
 .indicator-red { background-color: var(--status-red); color: white; }
 .indicator-yellow { background-color: var(--status-yellow); color: white; }
 .indicator-gray { background-color: #6b7280; color: white; font-weight: bold; }
 .indicator-empty { background-color: var(--bg-color); color: var(--text-muted); border: 1px dashed var(--border-color); }
 
-/* Center the content in the table cells so the squares line up nicely */
 table th, table td {
     text-align: center;
 }
 table th:first-child, table td:first-child {
-    text-align: left; /* Keep the Model names aligned to the left */
+    text-align: left;
 }
 
 /* --- 8. The Pop-Up Modal --- */
 .modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -323,7 +312,7 @@ table th:first-child, table td:first-child {
 }
 
 #save-btn:hover {
-    background-color: #059669; /* Darker green */
+    background-color: #059669;
 }
 
 /* --- 9. Dashboard Dropdowns (Accordions) --- */
@@ -359,7 +348,6 @@ table th:first-child, table td:first-child {
     margin-bottom: 0.25rem;
 }
 
-/* The little number badge next to the client name */
 .alert-badge {
     background-color: var(--status-red);
     color: white;
@@ -379,7 +367,7 @@ table th:first-child, table td:first-child {
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     transition: background-color 0.2s;
-    margin-left: -0.5rem; /* Offsets the padding to keep text aligned */
+    margin-left: -0.5rem;
 }
 
 .dashboard-item:hover {
@@ -391,7 +379,7 @@ table th:first-child, table td:first-child {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px; /* Space between the square and the links */
+    gap: 8px;
 }
 
 .link-container {
@@ -466,14 +454,13 @@ table th:first-child, table td:first-child {
 [data-theme="dark"] {
     --primary-color: #3b82f6;
     --primary-hover: #60a5fa;
-    --bg-color: #111827; /* Very dark gray */
-    --card-bg: #1f2937;  /* Slightly lighter dark gray */
-    --text-main: #f9fafb; /* Off-white text */
+    --bg-color: #111827;
+    --card-bg: #1f2937;
+    --text-main: #f9fafb;
     --text-muted: #9ca3af;
     --border-color: #374151;
 }
 
-/* Overrides for items that originally had hardcoded light colors */
 [data-theme="dark"] thead th,
 [data-theme="dark"] .client-dropdown {
     background-color: #111827;
@@ -494,9 +481,14 @@ table th:first-child, table td:first-child {
     color: white;
 }
 
-/* Optional: Make the modal background slightly darker for contrast */
 [data-theme="dark"] .modal {
     background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Info icon — same base as icon-btn but no rotation on hover */
+a.icon-btn:hover {
+    background-color: var(--border-color);
+    transform: none;
 }
 
 /* --- 13. Icon Buttons --- */
@@ -509,13 +501,13 @@ table th:first-child, table td:first-child {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%; /* Makes the hover background a perfect circle */
+    border-radius: 50%;
     transition: background-color 0.2s, transform 0.3s ease;
 }
 
 .icon-btn:hover {
     background-color: var(--border-color);
-    transform: rotate(45deg); /* Adds a subtle gear-turning effect */
+    transform: rotate(45deg);
 }
 
 /* --- 14. Modern Buttons --- */
@@ -523,7 +515,7 @@ table th:first-child, table td:first-child {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
-    border-radius: 8px; /* Smooth rounded corners */
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
     border: none;
@@ -533,7 +525,6 @@ table th:first-child, table td:first-child {
     font-family: inherit;
 }
 
-/* Primary "Save" Button */
 .btn-primary {
     background-color: var(--primary-color);
     color: white;
@@ -542,15 +533,14 @@ table th:first-child, table td:first-child {
 
 .btn-primary:hover {
     background-color: var(--primary-hover);
-    transform: translateY(-2px); /* Slight lift effect on hover */
+    transform: translateY(-2px);
     box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary:active {
-    transform: translateY(0); /* Pushes down when clicked */
+    transform: translateY(0);
 }
 
-/* Secondary "Clear" Button */
 .btn-secondary {
     background-color: transparent;
     color: var(--text-main);
@@ -563,16 +553,17 @@ table th:first-child, table td:first-child {
 }
 
 /* --- 15. Signed Out States --- */
-
-/* 1. Hide the inside of the sections when logged out */
 body.logged-out #workspace-view > *,
-body.logged-out #dashboard-view > * {
+body.logged-out #dashboard-view > *,
+body.logged-out #location-workspace-view > *,
+body.logged-out #location-dashboard-view > * {
     display: none !important;
 }
 
-/* 2. Inject the placeholder text cleanly into the empty space */
 body.logged-out #workspace-view::after,
-body.logged-out #dashboard-view::after {
+body.logged-out #dashboard-view::after,
+body.logged-out #location-workspace-view::after,
+body.logged-out #location-dashboard-view::after {
     content: "Sign-In To Get Started";
     display: block;
     text-align: center;
@@ -593,11 +584,11 @@ body.logged-out #dashboard-view::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-color); /* Matches your dark/light mode */
+    background-color: var(--bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Higher than modals */
+    z-index: 9999;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
@@ -625,4 +616,472 @@ body.logged-out #dashboard-view::after {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+
+/* ============================================================
+   NEW STYLES — PAGE TYPE SWITCHER
+============================================================ */
+
+#page-type-switcher-bar {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+#page-type-switcher {
+    display: inline-flex;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.page-type-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0.45rem 1.1rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+}
+
+.page-type-btn:hover {
+    color: var(--text-main);
+    background-color: var(--border-color);
+}
+
+.page-type-btn.active {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.page-type-btn svg {
+    flex-shrink: 0;
+}
+
+/* Page content sections — only .active is shown */
+.page-content {
+    display: none;
+}
+
+.page-content.active {
+    display: block;
+}
+
+/* Dark mode overrides for switcher */
+[data-theme="dark"] #page-type-switcher-bar {
+    background-color: var(--card-bg);
+}
+
+[data-theme="dark"] #page-type-switcher {
+    background-color: var(--bg-color);
+}
+
+[data-theme="dark"] .page-type-btn.active {
+    background-color: #374151;
+    color: var(--primary-color);
+}
+
+
+/* ============================================================
+   NEW STYLES — LOCATION WORKSPACE
+============================================================ */
+
+/* Filters bar with space-between layout */
+.location-filters-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* CSV Import button (styled like a button but is a <label>) */
+.btn-csv-import,
+.btn-csv-template {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.btn-csv-import {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.btn-csv-import:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.btn-csv-template {
+    background-color: transparent;
+    color: var(--text-muted);
+}
+
+.btn-csv-template:hover {
+    background-color: var(--border-color);
+    color: var(--text-main);
+}
+
+[data-theme="dark"] .btn-csv-template:hover {
+    background-color: #374151;
+}
+
+
+/* ============================================================
+   NEW STYLES — LOCATION CLIENT CARDS
+============================================================ */
+
+#location-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* One card per client */
+.location-client-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+/* Card header row: client name + Add Location button */
+.location-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+}
+
+.location-card-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.btn-add-location {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.35rem 0.85rem;
+    border-radius: 5px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.btn-add-location:hover {
+    background-color: var(--primary-hover);
+}
+
+/* The table inside each card */
+.location-card-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.location-card-table th,
+.location-card-table td {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+    font-size: 0.9rem;
+    min-width: unset; /* Override the global table min-width */
+}
+
+.location-card-table th:last-child,
+.location-card-table td:last-child {
+    border-right: none;
+}
+
+.location-card-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Column widths */
+.location-card-table .col-location { width: 40%; }
+.location-card-table .col-status   { width: 30%; text-align: center; }
+.location-card-table .col-link     { width: 15%; text-align: center; }
+.location-card-table .col-actions  { width: 15%; text-align: center; }
+
+/* Sticky header inside each card table */
+.location-card-table thead th {
+    background-color: var(--card-bg);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    box-shadow: 0 1px 0 var(--border-color);
+}
+
+/* Clickable status indicator inside location table */
+.location-card-table .status-indicator {
+    margin: 0 auto; /* Center it in its cell */
+}
+
+/* Icon link in location table */
+.location-page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    color: var(--primary-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.location-page-link:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Remove (delete) button per location row */
+.btn-remove-location {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.2s, background-color 0.2s;
+    line-height: 1;
+}
+
+.btn-remove-location:hover {
+    color: var(--status-red);
+    background-color: #fee2e2;
+}
+
+[data-theme="dark"] .btn-remove-location:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+/* Empty state message inside a card when a client has no locations yet */
+.location-card-empty {
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-style: italic;
+}
+
+/* ============================================================
+   NEW STYLES — LOCATION EMPTY STATE (full page)
+============================================================ */
+
+.location-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--card-bg);
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.location-empty-state strong {
+    color: var(--text-main);
+}
+
+
+
+/* ============================================================
+   NEW STYLES — MULTI-INPUT LIST (Add Model / Add Location)
+============================================================ */
+
+.multi-input-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 280px;
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+    padding-right: 2px; /* Room for scrollbar */
+}
+
+/* Each row: input + remove button */
+.multi-input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.multi-input-row input[type="text"] {
+    flex: 1;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-color);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+}
+
+.multi-input-row input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+/* Remove row button */
+.btn-remove-row {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: color 0.15s, background-color 0.15s;
+    flex-shrink: 0;
+}
+
+.btn-remove-row:hover {
+    color: var(--status-red);
+    background-color: #fee2e2;
+}
+
+[data-theme="dark"] .btn-remove-row:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+/* Hide the remove button when there's only one row */
+.multi-input-list:has(.multi-input-row:only-child) .btn-remove-row {
+    visibility: hidden;
+}
+
+/* "+ Add Another" text button */
+.btn-add-row {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.25rem 0;
+    font-family: inherit;
+    transition: opacity 0.15s;
+}
+
+.btn-add-row:hover {
+    opacity: 0.75;
+}
+
+.geo-type-options {
+    display: flex;
+    gap: 10px;
+}
+
+/* Hide the native radio input visually but keep it accessible */
+.geo-type-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.geo-type-label {
+    flex: 1;
+    cursor: pointer;
+}
+
+.geo-type-card {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0.65rem 0.85rem;
+    border: 2px solid var(--border-color);
+    border-radius: 7px;
+    background: var(--bg-color);
+    transition: border-color 0.15s, background-color 0.15s;
+}
+
+.geo-type-card:hover {
+    border-color: var(--primary-color);
+    background-color: var(--card-bg);
+}
+
+/* Selected state — driven by the hidden radio being checked */
+.geo-type-label input[type="radio"]:checked + .geo-type-card {
+    border-color: var(--primary-color);
+    background-color: var(--card-bg);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.geo-type-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.geo-type-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+}
+
+/* Highlight the title when selected */
+.geo-type-label input[type="radio"]:checked + .geo-type-card .geo-type-title {
+    color: var(--primary-color);
+}
+
+/* Dark mode — slightly adjust the unselected card background */
+[data-theme="dark"] .geo-type-card {
+    background-color: var(--bg-color);
+}
+
+[data-theme="dark"] .geo-type-label input[type="radio"]:checked + .geo-type-card {
+    background-color: #1e3a5f;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }

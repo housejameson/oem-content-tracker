@@ -7,43 +7,92 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
-
-<div style="background: #e5e7eb; padding: 1rem; text-align: center; margin-bottom: 1rem; display: none;">
-        <h3>Client Database Importer</h3>
-        <input type="file" id="csv-upload" accept=".csv" />
-    </div>
-
+ 
 <body>
+ 
+<!-- ============================================================ -->
+<!--  LOADING OVERLAY                                             -->
+<!-- ============================================================ -->
 <div id="loading-overlay">
     <div class="loader-content">
         <div class="spinner"></div>
         <p>Loading Dashboard...</p>
     </div>
 </div>
-    <header>
-        <h1>Model SRP + Research Page Content Tracker</h1>
-        <div id="user-controls" style="display: flex; gap: 15px; align-items: center;">
-            
-            <div style="display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Dark Mode</span>
-                <label class="theme-switch">
-                    <input type="checkbox" id="theme-toggle-cb">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <button id="settings-btn" class="hidden icon-btn" title="Configuration">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>
-            </button>
+ 
+<!-- ============================================================ -->
+<!--  HEADER                                                      -->
+<!-- ============================================================ -->
+<header>
+    <h1>Model SRP + Research Page Content Tracker</h1>
+    <div id="user-controls" style="display: flex; gap: 15px; align-items: center;">
+        
+        <a href="https://docs.google.com/document/d/1M8GLOxu6mocu1Touv0a3iGkOUqf17QmTXGM38lCIpqc/edit?tab=t.0#heading=h.758wlirz1lo5"
+           target="_blank"
+           class="icon-btn"
+           title="View SOP &amp; Feature Guide"
+           style="text-decoration: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="8"></line>
+                <line x1="12" y1="12" x2="12" y2="16"></line>
+            </svg>
+        </a>
+ 
+        <button id="settings-btn" class="hidden icon-btn" title="Configuration">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </button>
+ 
+        <button id="login-btn">Log in with Google</button>
 
-            <button id="login-btn">Log in with Google</button>
+        <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Dark Mode</span>
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle-cb">
+                <span class="slider"></span>
+            </label>
         </div>
-    </header>
 
-    <main>
+    </div>
+</header>
+
+<!-- ============================================================ -->
+<!--  PAGE TYPE SWITCHER                                          -->
+<!-- ============================================================ -->
+<div id="page-type-switcher-bar">
+    <div id="page-type-switcher">
+        <button class="page-type-btn active" data-page="models">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Model Pages
+        </button>
+        <button class="page-type-btn" data-page="locations">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Location Pages
+        </button>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  MAIN CONTENT                                                -->
+<!-- ============================================================ -->
+<main>
+
+    <!-- ========================================================
+         PAGE: MODEL PAGES (existing, unchanged)
+    ========================================================= -->
+    <div id="models-page" class="page-content active">
+
         <section id="dashboard-container">
             <h2 id="dashboard-title" style="margin-bottom: 1rem;">Dashboard</h2>
             
@@ -54,41 +103,38 @@
                 </div>
                 
                 <div class="alert-box">
-    <h3>Refresh Opportunities</h3>
-    
-    <h4 style="color: var(--status-yellow); margin-bottom: 0.5rem; font-size: 0.9rem;">
-        <span style="color: var(--text-main);">Last Updated:</span> 30+ Days Ago
-    </h4>
-    <div id="stale-30-list" style="margin-bottom: 1rem;"></div>
-    
-    <h4 style="color: #f77e3e; margin-bottom: 0.5rem; font-size: 0.9rem;">
-        <span style="color: var(--text-main);">Last Updated:</span> 60+ Days Ago
-    </h4>
-    <div id="stale-60-list" style="margin-bottom: 1rem;"></div>
-    
-    <h4 style="color: var(--status-red); margin-bottom: 0.5rem; font-size: 0.9rem;">
-        <span style="color: var(--text-main);">Last Updated:</span> 90+ Days Ago
-    </h4>
-    <div id="stale-90-list"></div>
-</div>
+                    <h3>Refresh Opportunities</h3>
+                    
+                    <h4 style="color: var(--status-yellow); margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span style="color: var(--text-main);">Last Updated:</span> 30+ Days Ago
+                    </h4>
+                    <div id="stale-30-list" style="margin-bottom: 1rem;"></div>
+                    
+                    <h4 style="color: #f77e3e; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span style="color: var(--text-main);">Last Updated:</span> 60+ Days Ago
+                    </h4>
+                    <div id="stale-60-list" style="margin-bottom: 1rem;"></div>
+                    
+                    <h4 style="color: var(--status-red); margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span style="color: var(--text-main);">Last Updated:</span> 90+ Days Ago
+                    </h4>
+                    <div id="stale-90-list"></div>
+                </div>
             </div>
         </section>
 
         <section id="workspace-view">
-            <nav class="oem-tabs" id="oem-tabs">
-            </nav>
+            <nav class="oem-tabs" id="oem-tabs"></nav>
 
             <div class="filters">
                 <label for="client-select">Select Client Group: </label>
                 <select id="client-select">
                     <option value="all">All Clients</option>
-                    <option value="group-a">Group A</option>
                 </select>
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 4px;">
-                <div id="oem-tabs-container" class="oem-tabs" style="border-bottom: none; margin-bottom: 0; padding-bottom: 1rem;">
-                    </div>
+                <div id="oem-tabs-container" class="oem-tabs" style="border-bottom: none; margin-bottom: 0; padding-bottom: 1rem;"></div>
                 
                 <button id="add-model-btn" style="background-color: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap; margin-left: 10px;">
                     + Add Model
@@ -97,117 +143,280 @@
 
             <div class="table-container">
                 <table id="tracking-table">
-    <thead>
-        <tr>
-            <th>Models</th>
-            <th>Smith Motors</th>
-            <th>Johnson Auto Group</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>F-150</th>
-            <td>
-                <div class="status-indicator indicator-green" title="Complete">&#10004;</div>
-            </td>
-            <td>
-                <div class="status-indicator indicator-red" title="Missing">&#10006;</div>
-            </td>
-        </tr>
-        <tr>
-            <th>Mustang</th>
-            <td>
-                <div class="status-indicator indicator-yellow" title="Needs Research Page">&#9888;</div>
-            </td>
-            <td>
-                <div class="status-indicator indicator-empty" title="Click to Edit">+</div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                    <thead id="table-head">
+                        <tr>
+                            <th>Models</th>
+                            <th>Smith Motors</th>
+                            <th>Johnson Auto Group</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <th>F-150</th>
+                            <td><div class="status-indicator indicator-green" title="Complete">&#10004;</div></td>
+                            <td><div class="status-indicator indicator-red" title="Missing">&#10006;</div></td>
+                        </tr>
+                        <tr>
+                            <th>Mustang</th>
+                            <td><div class="status-indicator indicator-yellow" title="Needs Research Page">&#9888;</div></td>
+                            <td><div class="status-indicator indicator-empty" title="Click to Edit">+</div></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
-    </main>
 
-    <div id="edit-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 id="modal-title">Edit Content Status</h2>
-            <p id="modal-subtitle">Model - Client</p>
-            
-            <div class="edit-section">
-                <h3>SRP</h3>
-                <label><input type="checkbox" id="srp-created"> Created</label>
-                <label><input type="checkbox" id="srp-optimized"> Optimized</label>
-                <input type="url" id="srp-link" placeholder="(Optional) Paste link here...">
-                
-                <hr style="margin: 10px 0; border: 0; border-top: 1px solid var(--border-color);">
-                <p style="margin-bottom: 0.5rem;"><i>Check all that apply if the SRP is not created/optimized:</i></p>
-                <label><input type="checkbox" id="srp-no-inventory"> No Current Inventory</label>
-                <label><input type="checkbox" id="srp-discontinued"> Discontinued</label>
-            </div>
+    </div><!-- /#models-page -->
 
-            <div class="edit-section">
-                <h3><span id="dynamic-year"></span> Research Page</h3>
-                <label><input type="checkbox" id="research-created"> Created</label>
-                <input type="url" id="research-link" placeholder="(Optional) Paste link here...">
 
-                <p style="font-size: 75%; margin-top: 0.5rem; margin-bottom: 0.8rem;"><i>*All research page completion statuses will update to "Under Review" at the start of Q3 each year to check for new year model releases.</i></p>
-                <hr style="margin: 10px 0; border: 0; border-top: 1px solid var(--border-color);">
-                <p style="margin-bottom: 0.5rem;"><i>Select if <span id="dynamic-model-year" style="font-weight: bold;"></span> Model has not been released as of July 1st:</i></p>
-                <label><input type="checkbox" id="research-not-available"> Not Available</label>
-            </div>
+    <!-- ========================================================
+         PAGE: LOCATION PAGES (new)
+    ========================================================= -->
+    <div id="locations-page" class="page-content">
 
-            <button id="save-btn">Save Updates</button>
-        </div>
-    </div>
+        <section id="location-dashboard-container">
+            <h2 id="dashboard-title" style="margin-bottom: 1rem;">Dashboard</h2>
 
-    <div id="settings-modal" class="modal hidden">
-        <div class="modal-content" style="max-width: 1000px; width: 95%;"> <span class="close-settings-btn close-btn">&times;</span>
-            <h2>Dashboard Configuration</h2>
-            <p id="modal-subtitle" style="margin-bottom: 1rem;">Select the clients you manage to filter your view.</p>
-            
-            <div style="display: flex; gap: 20px; margin-bottom: 1.5rem; height: 500px;">
-                
-                <div style="flex: 1; display: flex; flex-direction: column; border: 1px solid var(--border-color); border-radius: 4px; padding: 10px; background: var(--bg-color);">
-                    <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; color: var(--text-main);">
-                        Selected Clients (<span id="selected-count">0</span>)
-                    </h3>
-                    <div id="selected-clients-list" style="overflow-y: auto; flex: 1; padding-right: 5px;">
-                        </div>
+            <div id="location-dashboard-view">
+                <div class="alert-box">
+                    <h3>Attention Needed</h3>
+                    <div id="location-missing-pages-list"></div>
                 </div>
 
-                <div style="flex: 1; display: flex; flex-direction: column;">
-                    <input type="text" id="client-search" placeholder="Search clients..." style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 10px; background: var(--bg-color); color: var(--text-main);">
-                    
-                    <div id="client-selection-list" style="flex: 1; overflow-y: auto; padding-right: 5px; border: 1px solid var(--border-color); border-radius: 4px; padding: 10px; background: var(--bg-color);">
-                        </div>
+                <div class="alert-box">
+                    <h3>Refresh Opportunities</h3>
+
+                    <h4 style="color: var(--status-yellow); margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span style="color: var(--text-main);">Last Updated:</span> 30+ Days Ago
+                    </h4>
+                    <div id="location-stale-30-list" style="margin-bottom: 1rem;"></div>
+
+                    <h4 style="color: #f77e3e; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span style="color: var(--text-main);">Last Updated:</span> 60+ Days Ago
+                    </h4>
+                    <div id="location-stale-60-list" style="margin-bottom: 1rem;"></div>
+
+                    <h4 style="color: var(--status-red); margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span style="color: var(--text-main);">Last Updated:</span> 90+ Days Ago
+                    </h4>
+                    <div id="location-stale-90-list"></div>
                 </div>
-                
+            </div>
+        </section>
+
+        <section id="location-workspace-view">
+
+            <!-- Client Group dropdown filter -->
+            <div class="filters">
+                <label for="location-client-select">Select Client Group: </label>
+                <select id="location-client-select">
+                    <option value="all">All Clients</option>
+                </select>
             </div>
 
-            <div style="display: flex; gap: 15px;">
-                <button id="save-settings-btn" class="btn-modern btn-primary" style="flex: 1;">Save Configuration</button>
-                <button id="clear-settings-btn" class="btn-modern btn-secondary" style="flex: 1;">Clear Filters (Show All)</button>
-            </div>
-        </div>
-    </div>
+            <!-- Client tabs + Add Location button (mirrors OEM tabs + Add Model layout) -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 4px;">
+                <div id="location-tabs-container" class="oem-tabs" style="border-bottom: none; margin-bottom: 0; padding-bottom: 1rem;"></div>
 
-    <div id="add-model-modal" class="modal hidden">
-        <div class="modal-content" style="max-width: 400px;">
-            <span class="close-add-model-btn close-btn">&times;</span>
-            <h2>Add New Model</h2>
-            <p style="margin-bottom: 1rem; color: var(--text-muted);">Adding to: <strong id="add-model-oem-name" style="color: var(--text-main);"></strong></p>
+                <button id="add-location-btn" style="background-color: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap; margin-left: 10px;">
+                    + Add Location
+                </button>
+            </div>
+
+            <!-- Active client's location table rendered here by JS -->
+            <div id="location-cards-container">
+                <!-- Empty state shown before JS populates real data -->
+                <div class="location-empty-state" id="location-empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); margin-bottom: 1rem;">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <p>No clients configured yet. Set up your clients in Settings to get started.</p>
+                </div>
+            </div>
+
+        </section>
+
+    </div><!-- /#locations-page -->
+
+</main>
+
+
+<!-- ============================================================ -->
+<!--  MODAL: Edit Model/Research Status (existing, unchanged)     -->
+<!-- ============================================================ -->
+<div id="edit-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 id="modal-title">Edit Content Status</h2>
+        <p id="modal-subtitle">Model - Client</p>
+        
+        <div class="edit-section">
+            <h3>SRP</h3>
+            <label><input type="checkbox" id="srp-created"> Created</label>
+            <label><input type="checkbox" id="srp-optimized"> Optimized</label>
+            <input type="url" id="srp-link" placeholder="(Optional) Paste link here...">
             
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem;">Model Name</label>
-                <input type="text" id="new-model-input" placeholder="e.g. Bronco Sport" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-color); color: var(--text-main);">
+            <hr style="margin: 10px 0; border: 0; border-top: 1px solid var(--border-color);">
+            <p style="margin-bottom: 0.5rem;"><i>Check all that apply if the SRP is not created/optimized:</i></p>
+            <label><input type="checkbox" id="srp-no-inventory"> No Current Inventory</label>
+            <label><input type="checkbox" id="srp-discontinued"> Discontinued</label>
+        </div>
+
+        <div class="edit-section">
+            <h3><span id="dynamic-year"></span> Research Page</h3>
+            <label><input type="checkbox" id="research-created"> Created</label>
+            <input type="url" id="research-link" placeholder="(Optional) Paste link here...">
+
+            <p style="font-size: 75%; margin-top: 0.5rem; margin-bottom: 0.8rem;"><i>*All research page completion statuses will update to "Under Review" at the start of Q3 each year to check for new year model releases.</i></p>
+            <hr style="margin: 10px 0; border: 0; border-top: 1px solid var(--border-color);">
+            <p style="margin-bottom: 0.5rem;"><i>Select if <span id="dynamic-model-year" style="font-weight: bold;"></span> Model has not been released as of July 1st:</i></p>
+            <label><input type="checkbox" id="research-not-available"> Not Available</label>
+        </div>
+
+        <button id="save-btn">Save Updates</button>
+    </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  MODAL: Edit Location Page Status                            -->
+<!-- ============================================================ -->
+<div id="location-edit-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-location-edit-btn close-btn">&times;</span>
+        <h2 id="location-modal-title">Edit Location Status</h2>
+        <p id="location-modal-subtitle" style="color: var(--text-muted); margin-bottom: 1.5rem;">Location - Client</p>
+
+        <!-- GEO Type Selector -->
+        <div class="edit-section" style="margin-bottom: 1.25rem; padding-bottom: 1.25rem;">
+            <h3 style="margin-bottom: 0.75rem;">GEO Type</h3>
+            <div class="geo-type-options">
+                <label class="geo-type-label">
+                    <input type="radio" name="geo-type" id="geo-primary" value="primary">
+                    <div class="geo-type-card">
+                        <span class="geo-type-title">Primary GEO</span>
+                        <span class="geo-type-desc">Homepage <i>(90+ day refresh tracking only)</i></span>
+                    </div>
+                </label>
+                <label class="geo-type-label">
+                    <input type="radio" name="geo-type" id="geo-secondary" value="secondary">
+                    <div class="geo-type-card">
+                        <span class="geo-type-title">Secondary GEO</span>
+                        <span class="geo-type-desc">Location page <i>(30/60/90 day refresh tracking)</i></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Primary GEO Fields -->
+        <div id="location-primary-fields" class="edit-section hidden" style="border-bottom: none; padding-bottom: 0; margin-bottom: 1.5rem;">
+            <h3>Homepage</h3>
+            <label><input type="checkbox" id="location-primary-optimized"> Optimized</label>
+            <input type="url" id="location-primary-link" placeholder="(Optional) Paste homepage link here...">
+        </div>
+
+        <!-- Secondary GEO Fields -->
+        <div id="location-secondary-fields" class="edit-section hidden" style="border-bottom: none; padding-bottom: 0; margin-bottom: 1.5rem;">
+            <h3>Location Page</h3>
+            <label><input type="checkbox" id="location-created"> Created</label>
+            <label><input type="checkbox" id="location-optimized"> Optimized</label>
+            <input type="url" id="location-link" placeholder="(Optional) Paste link here...">
+        </div>
+
+        <button id="location-save-btn" style="width: 100%; background-color: var(--status-green); color: white; border: none; padding: 0.75rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+            Save Updates
+        </button>
+    </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  MODAL: Add New Location                                     -->
+<!-- ============================================================ -->
+<div id="add-location-modal" class="modal hidden">
+    <div class="modal-content" style="max-width: 420px;">
+        <span class="close-add-location-btn close-btn">&times;</span>
+        <h2>Add New Locations</h2>
+        <p style="margin-bottom: 1.25rem; color: var(--text-muted);">
+            Adding to: <strong id="add-location-client-name" style="color: var(--text-main);"></strong>
+        </p>
+
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">
+            City / Region Names
+            <span style="font-weight: 400; color: var(--text-muted);"> <i>(press Enter to add another row)</i></span>
+        </label>
+
+        <div id="location-input-list" class="multi-input-list"></div>
+
+        <button id="add-location-row-btn" class="btn-add-row">+ Add Another</button>
+
+        <button id="save-new-location-btn" style="width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 0.75rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1.25rem;">
+            Save Locations
+        </button>
+    </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  MODAL: Settings (existing, unchanged)                       -->
+<!-- ============================================================ -->
+<div id="settings-modal" class="modal hidden">
+    <div class="modal-content" style="max-width: 1000px; width: 95%;">
+        <span class="close-settings-btn close-btn">&times;</span>
+        <h2>Dashboard Configuration</h2>
+        <p id="modal-subtitle" style="margin-bottom: 1rem;">Select the clients you manage to filter your view.</p>
+        
+        <div style="display: flex; gap: 20px; margin-bottom: 1.5rem; height: 500px;">
+            
+            <div style="flex: 1; display: flex; flex-direction: column; border: 1px solid var(--border-color); border-radius: 4px; padding: 10px; background: var(--bg-color);">
+                <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; color: var(--text-main);">
+                    Selected Clients (<span id="selected-count">0</span>)
+                </h3>
+                <div id="selected-clients-list" style="overflow-y: auto; flex: 1; padding-right: 5px;"></div>
             </div>
 
-            <button id="save-new-model-btn" style="width: 100%;">Save Model</button>
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <input type="text" id="client-search" placeholder="Search clients..." style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 10px; background: var(--bg-color); color: var(--text-main);">
+                
+                <div id="client-selection-list" style="flex: 1; overflow-y: auto; padding-right: 5px; border: 1px solid var(--border-color); border-radius: 4px; padding: 10px; background: var(--bg-color);"></div>
+            </div>
+            
+        </div>
+
+        <div style="display: flex; gap: 15px;">
+            <button id="save-settings-btn" class="btn-modern btn-primary" style="flex: 1;">Save Configuration</button>
+            <button id="clear-settings-btn" class="btn-modern btn-secondary" style="flex: 1;">Clear Filters (Show All)</button>
         </div>
     </div>
+</div>
 
-    <script type="module" src="app.js"></script>
+
+<!-- ============================================================ -->
+<!--  MODAL: Add Model                                            -->
+<!-- ============================================================ -->
+<div id="add-model-modal" class="modal hidden">
+    <div class="modal-content" style="max-width: 420px;">
+        <span class="close-add-model-btn close-btn">&times;</span>
+        <h2>Add New Models</h2>
+        <p style="margin-bottom: 1.25rem; color: var(--text-muted);">
+            Adding to: <strong id="add-model-oem-name" style="color: var(--text-main);"></strong>
+        </p>
+
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">
+            Model Names
+            <span style="font-weight: 400; color: var(--text-muted);"> <i>(press Enter to add another row)</i></span>
+        </label>
+
+        <div id="model-input-list" class="multi-input-list"></div>
+
+        <button id="add-model-row-btn" class="btn-add-row">+ Add Another</button>
+
+        <button id="save-new-model-btn" style="width: 100%; margin-top: 1.25rem;">Save Models</button>
+    </div>
+</div>
+
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
